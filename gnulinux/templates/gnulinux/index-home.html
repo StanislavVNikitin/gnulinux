@@ -3,152 +3,96 @@
 
 
 {% block imageheader %}
-    <div id="post-header" class="page-header">
-        <div class="background-img" style="background-image: url('{% static 'assets/img/post-page.jpg' %}');"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="post-meta">
-                        <a class="post-category cat-2" href="category.html">JavaScript</a>
-                        <span class="post-date">March 27, 2018</span>
-                    </div>
-                    <h1>Ask HN: Does Anybody Still Use JQuery?</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+	{% if post_pin %}
+		<div id="post-header" class="page-header">
+				<div class="background-img" style="background-image: url('/media/{{ post_pin.photo }}');"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-10">
+							<div class="post-meta">
+								<a class="post-category {{ post_pin.category.class_name}}" href="{{ post.category.get_absolute_url }}">{{ post_pin.category.title }}</a>
+								<span class="post-date">{{post_pin.created_at|date:"j M Y" }}</span>
+							</div>
+							<h1>{{post_pin.title}}</h1>
+						</div>
+					</div>
+				</div>
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block content %}
 
-			<div class="row">
-				<div class="col-md-8">
+	<div class="row">
+		{% if posts_most_read %}
+			<div class="col-md-8">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="section-title">
-								<h2>Most Read</h2>
-							</div>
+
+							<div class="col-md-12">
+
+								<div class="section-title">
+									<h2>Популярные</h2>
+								</div>
+
+								{% for post in posts_most_read %}
+									<div class="col-md-12">
+										<div class="post post-row">
+											<a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+											<div class="post-body">
+												<div class="post-meta">
+													<a class="post-category {{ post.category.class_name }}" href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+													<span class="post-date">{{ post.created_at|date:"j M Y" }}</span>
+												</div>
+												<h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+												{{ post.content|truncatewords_html:30|safe }}
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+
 						</div>
 
-						<div class="col-md-12">
-							<div class="post post-row">
-								<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/post-4.jpg' %}" alt=""></a>
-								<div class="post-body">
-									<div class="post-meta">
-										<a class="post-category cat-2" href="category.html">JavaScript</a>
-										<span class="post-date">March 27, 2018</span>
-									</div>
-									<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against
-											JavaScript-Based CPU Side-Channel Attacks</a></h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
+
+							<div class="col-md-12">
+								<div class="section-row">
+									<button class="primary-button center-block">Все новости</button>
 								</div>
 							</div>
-						</div>
 
-
-						<div class="col-md-12">
-							<div class="post post-row">
-								<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/post-6.jpg' %}" alt=""></a>
-								<div class="post-body">
-									<div class="post-meta">
-										<a class="post-category cat-2" href="category.html">JavaScript</a>
-										<span class="post-date">March 27, 2018</span>
-									</div>
-									<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On
-											The Backend Development Block!</a></h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="col-md-12">
-							<div class="post post-row">
-								<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/post-1.jpg' %}" alt=""></a>
-								<div class="post-body">
-									<div class="post-meta">
-										<a class="post-category cat-4" href="category.html">Css</a>
-										<span class="post-date">March 27, 2018</span>
-									</div>
-									<h3 class="post-title"><a href="blog-post.html">CSS Float: A Tutorial</a></h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="col-md-12">
-							<div class="post post-row">
-								<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/post-2.jpg' %}" alt=""></a>
-								<div class="post-body">
-									<div class="post-meta">
-										<a class="post-category cat-3" href="category.html">Jquery</a>
-										<span class="post-date">March 27, 2018</span>
-									</div>
-									<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use
-											JQuery?</a></h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-12">
-							<div class="section-row">
-								<button class="primary-button center-block">Load More</button>
-							</div>
-						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+			<div class="col-md-4">
+
+					{% if posts_most_read_next %}
+
+						<div class="aside-widget">
+							<div class="section-title">
+								<h2>Популярные</h2>
+							</div>
+
+								{% for post in posts_most_read_next %}
+									<div class="post post-widget">
+									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+									<div class="post-body">
+										<h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+									</div>
+								</div>
+								{% endfor %}
+						</div>
+
+					{% endif %}
 
 					<div class="aside-widget">
 						<div class="section-title">
-							<h2>Most Read</h2>
-						</div>
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/widget-1.jpg' %}" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And
-										Development Tools</a></h3>
-							</div>
-						</div>
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/widget-2.jpg' %}" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website
-										Design Mockup Into Code Automatically</a></h3>
-							</div>
-						</div>
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/widget-3.jpg' %}" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The
-										Backend Development Block!</a></h3>
-							</div>
-						</div>
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="{% static 'assets/img/widget-4.jpg' %}" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And
-										Development Tools</a></h3>
-							</div>
-						</div>
-					</div>
-
-					<div class="aside-widget">
-						<div class="section-title">
-							<h2>Catagories</h2>
+							<h2>Категории</h2>
 						</div>
 						<div class="category-widget">
 							<ul>
-								<li><a href="index.html#" class="cat-1">Web Design<span>340</span></a></li>
-								<li><a href="index.html#" class="cat-2">JavaScript<span>74</span></a></li>
-								<li><a href="index.html#" class="cat-4">JQuery<span>41</span></a></li>
-								<li><a href="index.html#" class="cat-3">CSS<span>35</span></a></li>
+							 	{% for category in categories %}
+									{% if category.posts.count > 0 %}
+										<li><a href="{{ category.get_absolute_url }}" class="{{ category.class_name }}">{{ category.title }}<span>{{ category.posts.count }}</span></a></li>
+									{% endif %}
+								{% endfor %}
 							</ul>
 						</div>
 					</div>
@@ -157,20 +101,22 @@
 					<div class="aside-widget">
 						<div class="tags-widget">
 							<ul>
-								<li><a href="index.html#">Chrome</a></li>
-								<li><a href="index.html#">CSS</a></li>
-								<li><a href="index.html#">Tutorial</a></li>
-								<li><a href="index.html#">Backend</a></li>
-								<li><a href="index.html#">JQuery</a></li>
-								<li><a href="index.html#">Design</a></li>
-								<li><a href="index.html#">Development</a></li>
-								<li><a href="index.html#">JavaScript</a></li>
-								<li><a href="index.html#">Website</a></li>
+								{% if tags %}
+									{% for tag in tags %}
+										{% if tag.posts.count > 0 %}
+											<li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+
 							</ul>
 						</div>
 					</div>
 
 				</div>
-			</div>
+		{% else %}
+			<p>К сожалению, никаких новостей еще не опубликовано :(</p>
+		{% endif %}
+	</div>
 
 {% endblock %}

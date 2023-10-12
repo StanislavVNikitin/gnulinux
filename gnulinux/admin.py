@@ -11,11 +11,11 @@ from .models import *
 class ProfileAdmin(admin.ModelAdmin):
     save_as = True
     save_on_top = True
-    list_display = ("id", "user", "get_avatar")
-    list_display_links = ("id", "user")
+    list_display = ("user", "get_avatar")
+    list_display_links = ("user",)
     search_fields = ("user",)
     readonly_fields = ("get_avatar",)
-    fields = ("id", "user", "get_avatar", "birthday")
+    fields = ("user", "avatar", "get_avatar", "birthday")
 
     def get_avatar(self, obj):
         if obj.avatar:
@@ -57,12 +57,12 @@ class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
     save_as = True
     save_on_top = True
-    list_display = ("id", "title", "slug", "category", "created_at", "get_photo")
+    list_display = ("id", "title", "slug", "category", "is_published", "pin" , "created_at", "get_photo" , "deleted")
     list_display_links = ("id", "title")
     search_fields = ("title",)
-    list_filter = ("category",)
+    list_filter = ("category", "tags")
     readonly_fields = ("views", "created_at", "get_photo")
-    fields = ("title", "slug", "user", "category", "tags", "content", "photo", "get_photo", "views", "created_at")
+    fields = ("title", "slug", "user", "category", "tags", "content", "photo", "get_photo", "views", "created_at","is_published", "pin", "deleted")
 
     def get_photo(self, obj):
         if obj.photo:
@@ -76,11 +76,11 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     save_as = True
     save_on_top = True
-    list_display = ("id", "title", "slug", "get_photo")
+    list_display = ("id", "title", "slug", "get_photo", "class_name", "deleted")
     list_display_links = ("id", "title")
     search_fields = ("title",)
     readonly_fields = ("get_photo",)
-    fields = ("title", "slug", "photo", "get_photo")
+    fields = ("title", "slug", "class_name", "photo", "get_photo", "deleted")
 
     def get_photo(self, obj):
         if obj.photo:

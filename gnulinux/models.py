@@ -11,7 +11,7 @@ Model Profile
 """
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    avatar = models.ImageField(default='default.png', upload_to='profile_pics')
     birthday = models.DateField(blank=True, null=True)
 
     def __str__(self):
@@ -31,6 +31,11 @@ class Profile(models.Model):
         age = datetime.date.today() - self.birthday
         return int((age).days / 365.25)
 
+    class Meta:
+        verbose_name = "Профиль"
+        verbose_name_plural = "Профили"
+        ordering = ["user"]
+
 
 """
 Model Category
@@ -39,7 +44,7 @@ class Category(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     slug = models.SlugField(max_length=255, verbose_name="Url категории", unique=True)
     photo = models.ImageField(upload_to="photo/category/", blank=True, verbose_name="Картинка")
-    class_name = models.CharField(max_length=100, verbose_name="Класс CSS")
+    class_name = models.CharField(max_length=100, blank=True, verbose_name="Класс CSS")
     deleted = models.BooleanField(default=False, verbose_name='Удалено')
 
     def __str__(self):
@@ -97,6 +102,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     views = models.IntegerField(default=0, verbose_name="Количество просмотров")
+    pin = models.BooleanField(default=False, verbose_name='Закрепить')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
     deleted = models.BooleanField(default=False, verbose_name='Удалено')
 
