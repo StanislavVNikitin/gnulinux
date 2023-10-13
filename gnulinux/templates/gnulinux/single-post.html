@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{%load sidebar%}
+
+
+{% block imageheader %}
+	{% if post %}
+		<div id="post-header" class="page-header">
+				<div class="background-img" style="background-image: url('/media/{{ post.photo }}');"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-10">
+							<div class="post-meta">
+								<a class="post-category {{ post.category.class_name}}" href="{{ post.category.get_absolute_url }}">{{ post.category.title }}</a>
+								<span class="post-date">{{post.created_at|date:"j M Y" }}</span>
+							</div>
+							<h1>{{post.title}}</h1>
+						</div>
+					</div>
+				</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+	<div class="row">
+
+			<div class="col-md-8">
+
+				<div class="section-row sticky-container">
+						<div class="main-post">
+							{{ post.content|safe }}
+						</div>
+<!--						<div class="post-shares sticky-shares">
+							<a href="blog-post.html#" class="share-facebook"><i class="fa fa-facebook"></i></a>
+							<a href="blog-post.html#" class="share-twitter"><i class="fa fa-twitter"></i></a>
+							<a href="blog-post.html#" class="share-google-plus"><i class="fa fa-google-plus"></i></a>
+							<a href="blog-post.html#" class="share-pinterest"><i class="fa fa-pinterest"></i></a>
+							<a href="blog-post.html#" class="share-linkedin"><i class="fa fa-linkedin"></i></a>
+							<a href="blog-post.html#"><i class="fa fa-envelope"></i></a>
+						</div>-->
+					</div>
+
+
+
+				<div class="section-row">
+						<div class="post-author">
+							<div class="media">
+								<div class="media-left">
+									<img class="media-object" src="/media/{{ post.user.profile.avatar }}" alt="">
+								</div>
+								<div class="media-body">
+									<div class="media-heading">
+										<h3>{{ post.user.first_name }} {{ post.user.last_name }}</h3>
+									</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+										incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+										nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+									</p>
+									<ul class="author-social">
+										<li><a href="blog-post.html#"><i class="fa fa-facebook"></i></a></li>
+										<li><a href="blog-post.html#"><i class="fa fa-twitter"></i></a></li>
+										<li><a href="blog-post.html#"><i class="fa fa-google-plus"></i></a></li>
+										<li><a href="blog-post.html#"><i class="fa fa-instagram"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+			<div class="col-md-4">
+
+					{% if posts_most_read_next %}
+
+						<div class="aside-widget">
+							<div class="section-title">
+								<h2>Популярные</h2>
+							</div>
+
+								{% for post in posts_most_read_next %}
+									<div class="post post-widget">
+									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+									<div class="post-body">
+										<h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+									</div>
+								</div>
+								{% endfor %}
+						</div>
+
+					{% endif %}
+
+					<div class="aside-widget">
+							{% get_category_sidebar %}
+					</div>
+
+
+					<div class="aside-widget">
+							{% get_tags_sidebar %}
+					</div>
+
+				</div>
+
+	</div>
+
+{% endblock %}

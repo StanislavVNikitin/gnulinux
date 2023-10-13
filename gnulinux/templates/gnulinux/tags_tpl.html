@@ -1,0 +1,12 @@
+<div class="tags-widget">
+    <ul>
+        {% if tags %}
+            {% for tag in tags %}
+                {% if tag.posts.count > 0 %}
+                    <li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </ul>
+</div>

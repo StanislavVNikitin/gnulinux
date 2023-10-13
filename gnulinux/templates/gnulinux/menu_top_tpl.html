@@ -1,0 +1,11 @@
+<div class="{{ menu_class }}">
+    <ul class="nav-menu nav navbar-nav">
+        <li><a href="{% url 'gnulinux:home' %}">Главная</a></li>
+        <li><a href="{% url 'gnulinux:allposts' %}">Новости</a></li>
+        {% for category in categories %}
+            {% if category.posts.count > 0 %}
+            <li class="{{ category.class_name }}"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

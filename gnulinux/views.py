@@ -1,5 +1,5 @@
-from operator import attrgetter
-from django.views.generic import TemplateView
+from django.db.models import F
+from django.views.generic import TemplateView, ListView, DetailView
 
 from gnulinux.models import Category, Post, Tag
 
@@ -9,9 +9,6 @@ class HomeView(TemplateView):
     template_name = "gnulinux/index-home.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = Category.objects.filter(deleted=False)
-        tags = Tag.objects.filter(posts__deleted=False)
-        context['categories_menu'] = sorted(categories.order_by('-class_name')[:4], key=attrgetter('title'))
         post_pin = Post.objects.filter(deleted=False,is_published=True, pin=True).order_by('-created_at').first()
         posts = Post.objects.filter(deleted=False,is_published=True).exclude(pk=post_pin.pk).order_by('-views', '-created_at')
         if post_pin:
@@ -20,8 +17,60 @@ class HomeView(TemplateView):
             context['posts_most_read'] = posts[:4]
             if posts.count() > 4:
                 context['posts_most_read_next'] = posts[4:8]
-            if categories.exists():
-                context['categories'] = categories
-            if tags.exists():
-                context['tags'] = tags
+        return context
+
+class AllPostsListView(ListView):
+    template_name = "gnulinux/view_posts.html"
+    context_object_name = "posts"
+    paginate_by = 4
+    allow_empty = False
+
+    def get_queryset(self):
+        return Post.objects.filter(deleted=False).order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts_most_read'] = Post.objects.filter(deleted=False,is_published=True).order_by('-views', '-created_at')[:4]
+        context['title'] = 'Все новости'
+        return context
+
+class PostByCategory(ListView):
+    template_name = "gnulinux/view_posts.html"
+    context_object_name = "posts"
+    paginate_by = 4
+    allow_empty= False
+
+    def get_queryset(self):
+        return Post.objects.filter(category__slug=self.kwargs['slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts_most_read'] = Post.objects.filter(deleted=False, is_published=True).order_by('-views','-created_at')[:4]
+        context["title"] = Category.objects.get(slug=self.kwargs['slug'])
+        return context
+
+class PostByTag(ListView):
+    template_name = "gnulinux/view_posts.html"
+    context_object_name = "posts"
+    paginate_by = 4
+    allow_empty= False
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs['slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts_most_read'] = Post.objects.filter(deleted=False, is_published=True).order_by('-views','-created_at')[:4]
+        context["title"] = "#" + Tag.objects.get(slug=self.kwargs['slug']).title
+        return context
+
+class SinglePostView(DetailView):
+    model = Post
+    template_name = 'gnulinux/single-post.html'
+    context_object_name = "post"
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object.views = F('views')  + 1
+        self.object.save()
+        self.object.refresh_from_db()
         return context

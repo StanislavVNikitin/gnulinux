@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{%load sidebar%}
 
 
 {% block imageheader %}
@@ -55,7 +56,7 @@
 
 							<div class="col-md-12">
 								<div class="section-row">
-									<button class="primary-button center-block">Все новости</button>
+									<a href="{% url 'gnulinux:allposts' %}"><button class="primary-button center-block">Все новости</button></a>
 								</div>
 							</div>
 
@@ -83,34 +84,12 @@
 					{% endif %}
 
 					<div class="aside-widget">
-						<div class="section-title">
-							<h2>Категории</h2>
-						</div>
-						<div class="category-widget">
-							<ul>
-							 	{% for category in categories %}
-									{% if category.posts.count > 0 %}
-										<li><a href="{{ category.get_absolute_url }}" class="{{ category.class_name }}">{{ category.title }}<span>{{ category.posts.count }}</span></a></li>
-									{% endif %}
-								{% endfor %}
-							</ul>
-						</div>
+							{% get_category_sidebar %}
 					</div>
 
 
 					<div class="aside-widget">
-						<div class="tags-widget">
-							<ul>
-								{% if tags %}
-									{% for tag in tags %}
-										{% if tag.posts.count > 0 %}
-											<li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
-										{% endif %}
-									{% endfor %}
-								{% endif %}
-
-							</ul>
-						</div>
+							{% get_tags_sidebar %}
 					</div>
 
 				</div>

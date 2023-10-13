@@ -1,4 +1,5 @@
 {% load static %}
+{% load menu %}
 
 <div id="nav">
 
@@ -6,11 +7,11 @@
         <div class="container">
 
             <div class="nav-logo">
-                <a href="index.html" class="logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
+                <a href="{% url 'gnulinux:home' %}" class="logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
             </div>
 
 
-        {% include 'inc/_header-menu-top.html' %}
+        {% show_menu_top %}
 
 
             <div class="nav-btns">

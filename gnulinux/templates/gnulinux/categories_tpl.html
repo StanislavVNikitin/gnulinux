@@ -1,0 +1,13 @@
+<div class="section-title">
+    <h2>Категории</h2>
+</div>
+<div class="category-widget">
+    <ul>
+        {% for category in categories %}
+        {% if category.cnt > 0 %}
+        <li><a href="{{ category.get_absolute_url }}" class="{{ category.class_name }}">{{ category.title }}<span>{{ category.cnt }}</span></a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
