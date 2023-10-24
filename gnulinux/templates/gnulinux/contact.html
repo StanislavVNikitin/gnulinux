@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="row">
+    {% if page %}
+        <div class="col-md-6">
+            <div class="section-row">
+                {{ page.content|safe }}
+            </div>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+    {%else %}
+        <div class="col-md-6 col-md-offset-3">
+    {% endif %}
+
+        <div class="section-row">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <h3>Обратная связь:</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="primary-button" type="submit" value="Отправить"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

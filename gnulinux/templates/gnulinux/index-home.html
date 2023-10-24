@@ -6,7 +6,7 @@
 {% block imageheader %}
 	{% if post_pin %}
 		<div id="post-header" class="page-header">
-				<div class="background-img" style="background-image: url('/media/{{ post_pin.photo }}');"></div>
+				<div class="background-img" style="background-image: url('{{ post_pin.photo.url }}');"></div>
 				<div class="container">
 					<div class="row">
 						<div class="col-md-10">
@@ -14,7 +14,7 @@
 								<a class="post-category {{ post_pin.category.class_name}}" href="{{ post.category.get_absolute_url }}">{{ post_pin.category.title }}</a>
 								<span class="post-date">{{post_pin.created_at|date:"j M Y" }}</span>
 							</div>
-							<h1>{{post_pin.title}}</h1>
+							<a class="post-pin-link-h1" href="{{ post_pin.get_absolute_url }}"><h1>{{post_pin.title}}</h1></a>
 						</div>
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 								{% for post in posts_most_read %}
 									<div class="col-md-12">
 										<div class="post post-row">
-											<a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+											<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.photo.url }}" alt=""></a>
 											<div class="post-body">
 												<div class="post-meta">
 													<a class="post-category {{ post.category.class_name }}" href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
@@ -73,7 +73,7 @@
 
 								{% for post in posts_most_read_next %}
 									<div class="post post-widget">
-									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.photo.url }}" alt=""></a>
 									<div class="post-body">
 										<h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
 									</div>

@@ -2,11 +2,27 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.contrib import admin
 from django import forms
 from django.utils.safestring import mark_safe
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 from .models import *
 
 
 # Register your models here.
+class DeleteUndeleteMixin:
+
+    def mark_deleted(self, request, queryset):
+        count = queryset.update(deleted=True)
+        message = _(f"Удален, {count}")
+        messages.add_message(request, messages.INFO, message)
+
+    def un_delete(self, request, queryset):
+        count = queryset.update(deleted=False)
+        message = _(f"Снят с удаления, {count}")
+        messages.add_message(request, messages.INFO, message)
+
+    mark_deleted.short_description = _("Отметить на удалени")
+    un_delete.short_description = _("Убрать отметку удаления")
 
 class ProfileAdmin(admin.ModelAdmin):
     save_as = True
@@ -52,7 +68,7 @@ class PostAdminForm(forms.ModelForm):
         fields = "__all__"
 
 
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin, DeleteUndeleteMixin):
     prepopulated_fields = {"slug": ("title",)}
     form = PostAdminForm
     save_as = True
@@ -72,7 +88,7 @@ class PostAdmin(admin.ModelAdmin):
     get_photo.short_description = "Фото"
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin, DeleteUndeleteMixin):
     prepopulated_fields = {"slug": ("title",)}
     save_as = True
     save_on_top = True

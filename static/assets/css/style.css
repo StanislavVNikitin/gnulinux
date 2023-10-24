@@ -962,3 +962,28 @@ RESPONSIVE
          display:none;
     }
 }
+
+.pagination>li>a {
+    color: #000;
+}
+
+.pagination>li>a:focus {
+    color: #000;
+    background-color: lightgrey;
+    border-color: #000;
+}
+
+.pagination>li>a:hover {
+    color: #000;
+    background-color: lightgrey;
+    border-color: #000;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #000;
+    border-color: #000;
+}
+
+.post-pin-link-h1:hover{
+    text-decoration: none;
+}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block imageheader %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <ul class="page-header-breadcrumb">
+                        <li><a href="{% url 'gnulinux:home' %}">Главная</a></li>
+                        <li>{{ title }}</li>
+                    </ul>
+                    <h1>{{ title }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+	<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="section-row sticky-container">
+						<div class="main-post">
+							{{ page_content.content|safe }}
+						</div>
+				</div>
+
+			</div>
+
+	</div>
+
+{% endblock %}

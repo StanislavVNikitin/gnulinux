@@ -17,12 +17,12 @@
             <div class="nav-btns">
                 <button class="aside-btn"><i class="fa fa-bars"></i></button>
                 <button class="search-btn"><i class="fa fa-search"></i></button>
-<!--                <form action="search.html">-->
+                 <form action="{% url 'gnulinux:search' %}" role="search" method="get">
                     <div class="search-form">
-                        <input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
+                        <input class="search-input" type="text" name="s" placeholder="Поиск...">
                         <button class="search-close"><i class="fa fa-times"></i></button>
                     </div>
-<!--                </form>-->
+                 </form>
             </div>
 
         </div>
@@ -33,9 +33,9 @@
 
         <div class="section-row">
             <ul class="nav-aside-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contacts</a></li>
+                <li><a href="{% url 'gnulinux:home' %}">Главная</a></li>
+                <li><a href="{% url 'gnulinux:page' slug='about' %}">О проекте</a></li>
+                <li><a href="{% url 'gnulinux:contact' %}">Контакты</a></li>
             </ul>
         </div>
 

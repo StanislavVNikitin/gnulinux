@@ -6,7 +6,7 @@
 {% block imageheader %}
 	{% if post %}
 		<div id="post-header" class="page-header">
-				<div class="background-img" style="background-image: url('/media/{{ post.photo }}');"></div>
+				<div class="background-img" style="background-image: url('{{ post.photo.url }}');"></div>
 				<div class="container">
 					<div class="row">
 						<div class="col-md-10">
@@ -48,7 +48,7 @@
 						<div class="post-author">
 							<div class="media">
 								<div class="media-left">
-									<img class="media-object" src="/media/{{ post.user.profile.avatar }}" alt="">
+									<img class="media-object" src="{{ post.user.profile.avatar.url }}" alt="">
 								</div>
 								<div class="media-body">
 									<div class="media-heading">
@@ -72,16 +72,16 @@
 			</div>
 			<div class="col-md-4">
 
-					{% if posts_most_read_next %}
+					{% if posts_most_read %}
 
 						<div class="aside-widget">
 							<div class="section-title">
 								<h2>Популярные</h2>
 							</div>
 
-								{% for post in posts_most_read_next %}
+								{% for post in posts_most_read %}
 									<div class="post post-widget">
-									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.photo.url }}" alt=""></a>
 									<div class="post-body">
 										<h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
 									</div>
