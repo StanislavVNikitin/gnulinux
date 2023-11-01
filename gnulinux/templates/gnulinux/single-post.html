@@ -6,7 +6,7 @@
 {% block imageheader %}
 	{% if post %}
 		<div id="post-header" class="page-header">
-				<div class="background-img" style="background-image: url('{{ post.photo.url }}');"></div>
+				<div class="background-img" style="background-image: url('{% if post.photo%}{{post.photo.url}}{%else%}{% static 'assets/img/default_photo.png' %}{% endif %}');"></div>
 				<div class="container">
 					<div class="row">
 						<div class="col-md-10">
@@ -54,16 +54,6 @@
 									<div class="media-heading">
 										<h3>{{ post.user.first_name }} {{ post.user.last_name }}</h3>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-										nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-									</p>
-									<ul class="author-social">
-										<li><a href="blog-post.html#"><i class="fa fa-facebook"></i></a></li>
-										<li><a href="blog-post.html#"><i class="fa fa-twitter"></i></a></li>
-										<li><a href="blog-post.html#"><i class="fa fa-google-plus"></i></a></li>
-										<li><a href="blog-post.html#"><i class="fa fa-instagram"></i></a></li>
-									</ul>
 								</div>
 							</div>
 						</div>
@@ -81,7 +71,7 @@
 
 								{% for post in posts_most_read %}
 									<div class="post post-widget">
-									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.photo.url }}" alt=""></a>
+									<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{% if post.photo%}{{post.photo.url}}{%else%}{% static 'assets/img/default_photo.png' %}{% endif %}" alt=""></a>
 									<div class="post-body">
 										<h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
 									</div>

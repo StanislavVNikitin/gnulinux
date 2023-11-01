@@ -15,7 +15,7 @@ def get_popular_sidebar(cnt=3):
 
 @register.inclusion_tag('gnulinux/categories_tpl.html')
 def get_category_sidebar():
-    categories = Category.objects.annotate(cnt=Count('posts',filter=Q(posts__deleted=False))).filter(cnt__gt=0).order_by('title')
+    categories = Category.objects.annotate(cnt=Count('posts',filter=Q(posts__deleted=False,posts__is_published=True))).filter(cnt__gt=0).order_by('title')
     return {"categories": categories}
 
 @register.inclusion_tag('gnulinux/tags_tpl.html')

@@ -5,7 +5,7 @@
 {% block imageheader %}
 	{% if post_pin %}
 		<div id="post-header" class="page-header">
-				<div class="background-img" style="background-image: url('{{ post_pin.photo.url }}');"></div>
+				<div class="background-img" style="background-image: url('{% if post_pin.photo %}{{post_pin.photo.url}}{% endif %}');"></div>
 				<div class="container">
 					<div class="row">
 						<div class="col-md-10">
@@ -20,7 +20,7 @@
 		</div>
     {% elif category %}
         <div id="post-header" class="page-header">
-				<div class="background-img" style="background-image: url('{{ category.photo.url }}');"></div>
+				<div class="background-img" style="background-image: url('{% if category.photo %}{{category.photo.url}}{% endif %}');"></div>
 				<div class="container">
 					<div class="row">
 						<div class="col-md-10">
@@ -62,7 +62,7 @@
                 {% for post in posts%}
                 <div class="col-md-12">
                     <div class="post post-row">
-                        <a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.photo.url }}"
+                        <a class="post-img" href="{{ post.get_absolute_url }}"><img src="{% if post.photo%}{{post.photo.url}}{%else%}{% static 'assets/img/default_photo.png' %}{% endif %}"
                                                                                     alt=""></a>
                         <div class="post-body">
                             <div class="post-meta">
@@ -95,7 +95,7 @@
 
             {% for post in posts_most_read %}
             <div class="post post-widget">
-                <a class="post-img" href="{{ post.get_absolute_url }}"><img src="/media/{{ post.photo }}" alt=""></a>
+                <a class="post-img" href="{{ post.get_absolute_url }}"><img src="{% if post.photo%}{{post.photo.url}}{%else%}{% static 'assets/img/default_photo.png' %}{% endif %}" alt=""></a>
                 <div class="post-body">
                     <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                 </div>
